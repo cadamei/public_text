@@ -1,0 +1,39 @@
+ssh_authorized_keys:
+- ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINigEUXKwHvKNLTH3bfiFo4Sz44/J9mi+qsD0qndS3Lx
+- github:cadamei
+write_files:
+- encoding: ""
+  content: |-
+    #!/bin/bash
+    echo hi
+  owner: root
+  path: /etc/rc.local
+  permissions: '0755'
+hostname: k3os
+run_cmd:
+- "echo hi && echo bye"
+boot_cmd:
+- "echo hi && echo bye"
+init_cmd:
+- "echo hi && echo bye"
+
+k3os:
+  modules:
+  - kvm
+  - nvme
+  sysctl:
+    kernel.printk: 4 4 1 7
+    kernel.kptr_restrict: 1
+  dns_nameservers:
+  - 8.8.8.8
+  - 1.1.1.1
+  ntp_servers:
+  - 0.us.pool.ntp.org
+  - 1.us.pool.ntp.org
+  password: rancher
+  token: rancher
+  labels:
+    region: brisbane
+  k3s_args:
+  - server
+  - "--disable-agent"
